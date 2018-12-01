@@ -1,49 +1,46 @@
-#include<windows.h>
-#include <GL/glut.h>
+#include <iostream>
+#include <graphics.h>
+#include <conio.h>
 
+using namespace std;
 
-void init(void)
+int main()
 {
-	glClearColor(0.0, 0.0, 0.0, 0.0);	// Set display window colour to white
+    int gd = DETECT, gm;
+    initgraph(&gd,&gm,"");
 
-	glMatrixMode(GL_PROJECTION);		// Set projection parameters
-	gluOrtho2D(0.0, 400.0, 0.0, 400.0);
-}
+    //line
+    line(100,100,200,200);
 
-void drawShapes(void)
-{
-	glClear(GL_COLOR_BUFFER_BIT);	// Clear display window
+    //circle
+    int x1 = getmaxx();
+    int y1 = getmaxy();
+    int x = x1/2;
+    int y = y1/2;
+    setfillstyle(SOLID_FILL,RED);
+    circle(x,y,75);
+    floodfill(x,y,WHITE);
 
-	//Set colour to black
-	glColor3f(0.0, 0.0, 0.0);
-	//Adjust the point size
-	glPointSize(10.0);
+    setfillstyle(SOLID_FILL,BLUE);
+    line(x-200,y+100,x+200,y+100);
+    line(x-200,y+100,x-200,y-100);
+    line(x-200,y-100,x+200,y-100);
+    line(x+200,y-100,x+200,y+100);
+    floodfill(x-190,y-90,WHITE);
+    line(x-200,y-100,x-200,y+300);
+    line(x-210,y-100,x-210,y+300);
+    line(x-200,y-100,x-210,y-100);
 
-	// Draw a couple of points
+    //rectangle
 
-	//Set colour to red
-	glColor3f(1.0, 0.0, 0.0);
+    setfillstyle(SOLID_FILL,BLUE);
+    line(400,100,600,100);
+    line(400,100,400,200);
+    line(400,200,600,200);
+    line(600,200,600,100);
+    floodfill(401,110,WHITE);
 
-	// Draw a line
-	glBegin(GL_LINES);
-		glVertex2i(20, 250);
-		glVertex2i(100, 80);
+    getch();
 
-	glEnd();
-	glFlush();	// Process all OpenGL routines
-}
-int main(int argc, char* argv[])
-{
-	glutInit(&argc, argv);						// Initalise GLUT
-	glutInitDisplayMode(GLUT_SINGLE|GLUT_RGB);	// Set display mode
-
-	glutInitWindowPosition(100, 100);				// Set window position
-	glutInitWindowSize(350, 350);					// Set window size
-	glutCreateWindow("An Example OpenGL Program");	// Create display window
-
-	init();							// Execute initialisation procedure
-	glutDisplayFunc(drawShapes);		// Send graphics to display window
-	glutMainLoop();					// Display everything and wait
-
-	return 0;
+    return 0;
 }
